@@ -1,0 +1,11 @@
+{
+    // Enable format on save
+    "editor.formatOnSave": true,
+    // Set the default formatter to Dart
+    "editor.defaultFormatter": "Dart-Code.dart-code",
+    // Enable sorting of imports on save
+    "dart.sortImports": true,
+    // Add const where possible
+    "dart.addDart2ConstConstructor": true
+  }
+  
