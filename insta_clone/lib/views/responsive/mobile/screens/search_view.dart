@@ -10,7 +10,9 @@ class SearchView extends StatelessWidget {
       backgroundColor: mobileBackgroundColor,
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
-        title: const Text('Search View'),
+        title: TextFormField(
+          decoration: const InputDecoration(labelText: 'Search'),
+        ),
       ),
     );
   }

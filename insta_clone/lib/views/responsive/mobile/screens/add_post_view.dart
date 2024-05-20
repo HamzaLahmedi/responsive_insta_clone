@@ -6,11 +6,16 @@ class AddPostView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: mobileBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: mobileBackgroundColor,
-        title: const Text('Add Post View'),
+      body: Center(
+        child: IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.upload,
+            size: 55,
+          ),
+        ),
       ),
     );
   }
