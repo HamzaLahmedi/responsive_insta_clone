@@ -4,6 +4,7 @@ import 'package:insta_clone/core/utils/colors.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/add_post_view.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/home_view.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/profile_view.dart';
+import 'package:insta_clone/views/responsive/mobile/screens/register_view.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/search_view.dart';
 
 class MobileView extends StatefulWidget {
@@ -35,9 +36,9 @@ class _MobileViewState extends State<MobileView> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      body: PageView(
+      body: const RegisterView(),
+      /*  PageView(
         onPageChanged: _onPageChanged,
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
@@ -66,7 +67,7 @@ class _MobileViewState extends State<MobileView> {
             BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.person),
             ),
-          ]),
+          ]),*/
     );
   }
 }
