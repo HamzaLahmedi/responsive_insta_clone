@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:insta_clone/core/utils/colors.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/add_post_view.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/home_view.dart';
+import 'package:insta_clone/views/responsive/mobile/screens/login_view.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/profile_view.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/register_view.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/search_view.dart';
@@ -37,7 +38,7 @@ class _MobileViewState extends State<MobileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const RegisterView(),
+      body: const LoginView(),
       /*  PageView(
         onPageChanged: _onPageChanged,
         physics: const NeverScrollableScrollPhysics(),

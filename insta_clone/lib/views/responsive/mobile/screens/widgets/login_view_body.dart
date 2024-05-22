@@ -2,23 +2,19 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_clone/core/widgets/custom_elevated_button.dart';
 import 'package:insta_clone/core/widgets/custom_text_form_field.dart';
-import 'package:insta_clone/views/responsive/mobile/screens/login_view.dart';
-import 'package:insta_clone/views/responsive/mobile/screens/widgets/register_header.dart';
+import 'package:insta_clone/views/responsive/mobile/screens/register_view.dart';
 
-class RegisterBodyView extends StatefulWidget {
-  const RegisterBodyView({super.key});
+class LoginViewBody extends StatefulWidget {
+  const LoginViewBody({super.key});
 
   @override
-  State<RegisterBodyView> createState() => _RegisterBodyViewState();
+  State<LoginViewBody> createState() => _LoginViewBodyState();
 }
 
-bool isVisible = true;
-final TextEditingController emailController = TextEditingController();
-final TextEditingController passwordController = TextEditingController();
-final TextEditingController nameController = TextEditingController();
-final TextEditingController titleController = TextEditingController();
-
-class _RegisterBodyViewState extends State<RegisterBodyView> {
+class _LoginViewBodyState extends State<LoginViewBody> {
+  bool isVisible = true;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -32,36 +28,8 @@ class _RegisterBodyViewState extends State<RegisterBodyView> {
             //key: _formKey,
             child: Column(
               children: [
-                const RegisterHeader(),
                 const SizedBox(
                   height: 33,
-                ),
-                CustomTextFormField(
-                  text: 'Enter Your Name : ',
-                  suffixIcon: const Icon(
-                    Icons.person,
-                  ),
-                  keyboardType: TextInputType.text,
-                  validator: (value) {
-                    return value!.length < 4
-                        ? "Enter at least 4 characters"
-                        : null;
-                  },
-                  controller: nameController,
-                ),
-                const SizedBox(
-                  height: 22,
-                ),
-                CustomTextFormField(
-                  text: 'Enter Your title : ',
-                  suffixIcon: const Icon(
-                    Icons.person,
-                  ),
-                  keyboardType: TextInputType.text,
-                  controller: titleController,
-                ),
-                const SizedBox(
-                  height: 22,
                 ),
                 CustomTextFormField(
                   text: 'Enter Your Email : ',
@@ -104,7 +72,7 @@ class _RegisterBodyViewState extends State<RegisterBodyView> {
                   height: 33,
                 ),
                 const CustomElevatedButton(
-                  title: 'Register',
+                  title: 'Login',
                 ),
                 const SizedBox(
                   height: 33,
@@ -112,17 +80,17 @@ class _RegisterBodyViewState extends State<RegisterBodyView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Already have an account?",
+                    const Text("Do not have an account?",
                         style: TextStyle(fontSize: 18)),
                     TextButton(
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const LoginView()),
+                                builder: (context) => const RegisterView()),
                           );
                         },
-                        child: const Text('Sign In',
+                        child: const Text('Sign Up',
                             style: TextStyle(
                                 fontSize: 18,
                                 decoration: TextDecoration.underline))),

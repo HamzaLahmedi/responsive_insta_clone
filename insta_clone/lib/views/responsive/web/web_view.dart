@@ -4,6 +4,7 @@ import 'package:insta_clone/core/utils/colors.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/add_post_view.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/home_view.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/profile_view.dart';
+import 'package:insta_clone/views/responsive/mobile/screens/register_view.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/search_view.dart';
 
 class WebView extends StatefulWidget {
@@ -79,7 +80,8 @@ class _WebViewState extends State<WebView> {
           height: 32,
         ),
       ),
-      body: PageView(
+      body: const RegisterView(),
+      /* PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         children: const [
@@ -88,7 +90,7 @@ class _WebViewState extends State<WebView> {
           AddPostView(),
           ProfileView(),
         ],
-      ),
+      ),*/
     );
   }
 }

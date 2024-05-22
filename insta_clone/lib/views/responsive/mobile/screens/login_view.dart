@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:insta_clone/core/utils/colors.dart';
-import 'package:insta_clone/views/responsive/mobile/screens/widgets/register_body_view.dart';
+import 'package:insta_clone/views/responsive/mobile/screens/widgets/login_view_body.dart';
 
-class RegisterView extends StatelessWidget {
-  const RegisterView({super.key});
+class LoginView extends StatelessWidget {
+  const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,11 +12,11 @@ class RegisterView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
 
-        title: const Text("Register"),
+        title: const Text("Login"),
         elevation: 0,
         // backgroundColor: appbarGreen,
       ),
-      body: const RegisterBodyView(),
+      body: const LoginViewBody(),
     );
   }
 }
