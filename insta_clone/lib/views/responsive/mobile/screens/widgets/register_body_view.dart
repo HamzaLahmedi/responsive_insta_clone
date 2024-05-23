@@ -159,7 +159,7 @@ class _RegisterBodyViewState extends State<RegisterBodyView> {
                             )
                           : CircleAvatar(
                               backgroundColor:
-                                  Color.fromARGB(255, 225, 225, 225),
+                                const  Color.fromARGB(255, 225, 225, 225),
                               radius: 75,
                               backgroundImage: MemoryImage(imgPath!),
                             ),
@@ -263,6 +263,8 @@ class _RegisterBodyViewState extends State<RegisterBodyView> {
                       await authMethods.register(
                         emailAddress: emailController.text,
                         password: passwordController.text,
+                        username: nameController.text,
+                        title: titleController.text,
                         context: context,
                       );
                       setState(() {

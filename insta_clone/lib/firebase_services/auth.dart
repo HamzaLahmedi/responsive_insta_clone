@@ -2,11 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_clone/core/utils/custom_snackbar.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/login_view.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthMethods {
   register(
       {required String emailAddress,
       required String password,
+      required String username,
+      required String title,
       required context}) async {
     try {
       final credential =
@@ -14,7 +17,22 @@ class AuthMethods {
         email: emailAddress,
         password: password,
       );
-      Navigator.push(
+        CollectionReference users =
+          FirebaseFirestore.instance.collection('users');
+      users
+          .doc(credential.user!.uid)
+          .set({
+            'username': username,
+            'title': title,
+            "email": emailAddress,
+            "password": password,
+          })
+          .then((value) => print("User Added"))
+          .catchError((error) => print("Failed to add user: $error"));
+
+
+
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoginView()),
       );
