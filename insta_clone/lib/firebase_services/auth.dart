@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_clone/core/utils/custom_snackbar.dart';
+import 'package:insta_clone/models/user.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/login_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -17,20 +20,18 @@ class AuthMethods {
         email: emailAddress,
         password: password,
       );
-        CollectionReference users =
+      UserModel userr = UserModel(
+          userName: username,
+          email: emailAddress,
+          password: password,
+          title: title);
+      CollectionReference users =
           FirebaseFirestore.instance.collection('users');
       users
           .doc(credential.user!.uid)
-          .set({
-            'username': username,
-            'title': title,
-            "email": emailAddress,
-            "password": password,
-          })
+          .set(userr.toMapp())
           .then((value) => print("User Added"))
           .catchError((error) => print("Failed to add user: $error"));
-
-
 
       Navigator.pushReplacement(
         context,
