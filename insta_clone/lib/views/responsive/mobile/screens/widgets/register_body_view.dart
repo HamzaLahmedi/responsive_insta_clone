@@ -1,7 +1,9 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:insta_clone/core/utils/custom_snackbar.dart';
 import 'package:insta_clone/core/widgets/custom_elevated_button.dart';
 import 'package:insta_clone/core/widgets/custom_text_form_field.dart';
+import 'package:insta_clone/firebase_services/auth.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/login_view.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/register_header.dart';
 
@@ -12,13 +14,25 @@ class RegisterBodyView extends StatefulWidget {
   State<RegisterBodyView> createState() => _RegisterBodyViewState();
 }
 
-bool isVisible = true;
-final TextEditingController emailController = TextEditingController();
-final TextEditingController passwordController = TextEditingController();
-final TextEditingController nameController = TextEditingController();
-final TextEditingController titleController = TextEditingController();
-
 class _RegisterBodyViewState extends State<RegisterBodyView> {
+  bool isVisible = true;
+  bool isLoading = false;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  final AuthMethods authMethods = AuthMethods();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    nameController.dispose();
+    titleController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -29,7 +43,7 @@ class _RegisterBodyViewState extends State<RegisterBodyView> {
             : const EdgeInsets.all(33.0),
         child: SingleChildScrollView(
           child: Form(
-            //key: _formKey,
+            key: formKey,
             child: Column(
               children: [
                 const RegisterHeader(),
@@ -103,8 +117,26 @@ class _RegisterBodyViewState extends State<RegisterBodyView> {
                 const SizedBox(
                   height: 33,
                 ),
-                const CustomElevatedButton(
+                CustomElevatedButton(
                   title: 'Register',
+                  isLoading: isLoading,
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      setState(() {
+                        isLoading = true;
+                      });
+                      await authMethods.register(
+                        emailAddress: emailController.text,
+                        password: passwordController.text,
+                        context: context,
+                      );
+                      setState(() {
+                        isLoading = false;
+                      });
+                    } else {
+                      showSnackBar(context, "Something went wrong");
+                    }
+                  },
                 ),
                 const SizedBox(
                   height: 33,

@@ -13,8 +13,10 @@ class LoginViewBody extends StatefulWidget {
 
 class _LoginViewBodyState extends State<LoginViewBody> {
   bool isVisible = true;
+  bool isLoading = false;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -25,7 +27,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
             : const EdgeInsets.all(33.0),
         child: SingleChildScrollView(
           child: Form(
-            //key: _formKey,
+            key: formKey,
             child: Column(
               children: [
                 const SizedBox(
@@ -71,8 +73,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 const SizedBox(
                   height: 33,
                 ),
-                const CustomElevatedButton(
+                 CustomElevatedButton(
                   title: 'Login',
+                  isLoading: isLoading,
                 ),
                 const SizedBox(
                   height: 33,
