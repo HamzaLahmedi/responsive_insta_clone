@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class RegisterHeader extends StatelessWidget {
   const RegisterHeader({
-    super.key,
+    super.key, this.onPressed,
   });
-
+final Function()? onPressed;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +24,7 @@ class RegisterHeader extends StatelessWidget {
             left: 99,
             bottom: -10,
             child: IconButton(
-              onPressed: () {},
+              onPressed:onPressed,
               icon: const Icon(Icons.add_a_photo),
               color: const Color.fromARGB(255, 208, 218, 224),
             ),
