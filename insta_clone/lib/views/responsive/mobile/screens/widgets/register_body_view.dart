@@ -1,4 +1,3 @@
-
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -47,7 +46,6 @@ class _RegisterBodyViewState extends State<RegisterBodyView> {
     });
   }
 
-  
   showModal() {
     return showBottomSheet(
         context: context,
@@ -94,7 +92,7 @@ class _RegisterBodyViewState extends State<RegisterBodyView> {
                   onTap: () async {
                     await uploadImage2Screen(context, setImage,
                         source: ImageSource.gallery);
-                    // this works for mobile only 
+                    // this works for mobile only
                     /*final newImgPath =
                         await uploadImg.uploadImage(ImageSource.gallery);
                       
@@ -159,7 +157,7 @@ class _RegisterBodyViewState extends State<RegisterBodyView> {
                             )
                           : CircleAvatar(
                               backgroundColor:
-                                const  Color.fromARGB(255, 225, 225, 225),
+                                  const Color.fromARGB(255, 225, 225, 225),
                               radius: 75,
                               backgroundImage: MemoryImage(imgPath!),
                             ),
@@ -256,7 +254,9 @@ class _RegisterBodyViewState extends State<RegisterBodyView> {
                   title: 'Register',
                   isLoading: isLoading,
                   onPressed: () async {
-                    if (formKey.currentState!.validate()) {
+                    if (formKey.currentState!.validate() &&
+                        imgName != null &&
+                        imgPath != null) {
                       setState(() {
                         isLoading = true;
                       });
@@ -265,6 +265,8 @@ class _RegisterBodyViewState extends State<RegisterBodyView> {
                         password: passwordController.text,
                         username: nameController.text,
                         title: titleController.text,
+                        imgName: imgName!,
+                        imgPath: imgPath!,
                         context: context,
                       );
                       setState(() {

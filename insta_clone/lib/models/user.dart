@@ -3,11 +3,13 @@ class UserModel {
   String email;
   String password;
   String title;
+  String imgUrl;
   UserModel({
     required this.userName,
     required this.email,
     required this.password,
     required this.title,
+    required this.imgUrl,
   });
 
   Map<String, dynamic> toMapp() {
@@ -16,6 +18,7 @@ class UserModel {
       'email': email,
       'password': password,
       'title': title,
+      'imgUrl':imgUrl,
     };
   }
 }
