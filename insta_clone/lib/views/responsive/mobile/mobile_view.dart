@@ -38,8 +38,9 @@ class _MobileViewState extends State<MobileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const LoginView(),
-      /*  PageView(
+      body:
+      // const LoginView(),
+        PageView(
         onPageChanged: _onPageChanged,
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
@@ -68,7 +69,7 @@ class _MobileViewState extends State<MobileView> {
             BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.person),
             ),
-          ]),*/
+          ]),
     );
   }
 }

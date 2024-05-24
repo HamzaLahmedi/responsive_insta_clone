@@ -80,8 +80,9 @@ class _WebViewState extends State<WebView> {
           height: 32,
         ),
       ),
-      body: const RegisterView(),
-      /* PageView(
+      body:
+      // const RegisterView(),
+       PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         children: const [
@@ -90,7 +91,7 @@ class _WebViewState extends State<WebView> {
           AddPostView(),
           ProfileView(),
         ],
-      ),*/
+      ),
     );
   }
 }

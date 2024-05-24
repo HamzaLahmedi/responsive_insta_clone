@@ -1,7 +1,9 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:insta_clone/core/utils/custom_snackbar.dart';
 import 'package:insta_clone/core/widgets/custom_elevated_button.dart';
 import 'package:insta_clone/core/widgets/custom_text_form_field.dart';
+import 'package:insta_clone/firebase_services/auth.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/register_view.dart';
 
 class LoginViewBody extends StatefulWidget {
@@ -17,6 +19,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  final AuthMethods authMethods = AuthMethods();
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -73,9 +76,25 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 const SizedBox(
                   height: 33,
                 ),
-                 CustomElevatedButton(
+                CustomElevatedButton(
                   title: 'Login',
                   isLoading: isLoading,
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()){
+                      setState(() {
+                        isLoading=true;
+                      });
+                    await authMethods.signIn(
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
+                    setState(() {
+                        isLoading=false;
+                      });
+                    }else {
+                      showSnackBar(context, "All fields required");
+                    }
+                  },
                 ),
                 const SizedBox(
                   height: 33,

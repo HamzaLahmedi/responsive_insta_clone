@@ -273,7 +273,7 @@ class _RegisterBodyViewState extends State<RegisterBodyView> {
                         isLoading = false;
                       });
                     } else {
-                      showSnackBar(context, "Something went wrong");
+                      showSnackBar(context, "All fields required");
                     }
                   },
                 ),

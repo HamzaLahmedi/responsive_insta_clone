@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:insta_clone/core/utils/colors.dart';
@@ -28,7 +29,9 @@ class HomeView extends StatelessWidget {
                   icon: const Icon(Icons.messenger_outline),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: ()async {
+                    await FirebaseAuth.instance.signOut();
+                  },
                   icon: const Icon(Icons.logout),
                 ),
               ],
