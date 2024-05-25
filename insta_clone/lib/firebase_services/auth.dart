@@ -33,6 +33,8 @@ class AuthMethods {
         password: password,
         title: title,
         imgUrl: imgUrl,
+        following: [],
+        followers: [],
       );
 
       CollectionReference users =

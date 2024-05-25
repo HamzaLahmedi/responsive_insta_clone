@@ -5,43 +5,44 @@ class ProfileHeader extends StatelessWidget {
   const ProfileHeader({
     super.key,
     required this.imgUrl,
+    required this.nbrFollower,
+    required this.nbrFollowing,
   });
-  final String imgUrl;
+  final String imgUrl, nbrFollower, nbrFollowing;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Container(
           margin: const EdgeInsets.only(left: 12),
-          child:  CircleAvatar(
-            backgroundImage: NetworkImage(
-                imgUrl),
+          child: CircleAvatar(
+            backgroundImage: NetworkImage(imgUrl),
             radius: 40,
           ),
         ),
         const SizedBox(
           width: 8,
         ),
-        const Expanded(
+        Expanded(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ProfileStats(
+              const ProfileStats(
                 nbr: '1',
                 title: 'Posts',
               ),
-              SizedBox(
+              const SizedBox(
                 width: 18,
               ),
               ProfileStats(
-                nbr: '8',
+                nbr: nbrFollower,
                 title: 'Followers',
               ),
-              SizedBox(
+              const SizedBox(
                 width: 18,
               ),
               ProfileStats(
-                nbr: '15',
+                nbr: nbrFollowing,
                 title: 'Following',
               ),
             ],

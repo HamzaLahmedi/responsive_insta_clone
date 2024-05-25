@@ -6,15 +6,18 @@ import 'package:insta_clone/views/responsive/mobile/screens/widgets/profile_icon
 
 class ProfileBodyView extends StatefulWidget {
   const ProfileBodyView({
-    super.key, required this.onUserNameChanged,
+    super.key,
+    required this.onUserNameChanged,
   });
-final Function(String) onUserNameChanged;
+  final Function(String) onUserNameChanged;
   @override
   State<ProfileBodyView> createState() => _ProfileBodyViewState();
 }
 
 class _ProfileBodyViewState extends State<ProfileBodyView> {
   bool isLoading = true;
+  int followers = 0;
+  int following = 0;
   Map userData = {};
   getData() async {
     try {
@@ -28,6 +31,8 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
           .get();
       userData = snapshot.data()!;
       widget.onUserNameChanged(userData['userName']);
+      followers = userData['followers'].length;
+      following = userData['following'].length;
     } catch (e) {
       print(e.toString());
     }
@@ -59,6 +64,8 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
               children: [
                 ProfileHeader(
                   imgUrl: userData['imgUrl'],
+                  nbrFollower: followers.toString(),
+                  nbrFollowing: following.toString(),
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(35, 21, 0, 0),
