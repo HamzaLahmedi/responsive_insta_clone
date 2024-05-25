@@ -4,17 +4,18 @@ import 'package:insta_clone/views/responsive/mobile/screens/widgets/profile_stat
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({
     super.key,
+    required this.imgUrl,
   });
-
+  final String imgUrl;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Container(
           margin: const EdgeInsets.only(left: 12),
-          child: const CircleAvatar(
+          child:  CircleAvatar(
             backgroundImage: NetworkImage(
-                'https://i.pinimg.com/564x/94/df/a7/94dfa775f1bad7d81aa9898323f6f359.jpg'),
+                imgUrl),
             radius: 40,
           ),
         ),

@@ -2,8 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:insta_clone/core/utils/colors.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/profile_body_view.dart';
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
+
+  @override
+  State<ProfileView> createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<ProfileView> {
+  String userName = 'User Name';
+
+  void updateUserName(String name) {
+    setState(() {
+      userName = name;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +24,11 @@ class ProfileView extends StatelessWidget {
       backgroundColor: mobileBackgroundColor,
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
-        title: const Text('User Name'),
+        title: Text(userName),
       ),
-      body:const ProfileBodyView(),
+      body: ProfileBodyView(
+        onUserNameChanged: updateUserName,
+      ),
     );
   }
 }
-
