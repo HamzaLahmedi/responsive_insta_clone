@@ -16,7 +16,7 @@ class MobileView extends StatefulWidget {
 }
 
 class _MobileViewState extends State<MobileView> {
-  final PageController pageController = PageController();
+  final PageController pageController = PageController(initialPage: 2);
   int _selectedIndex = 0;
 
   void _onPageChanged(int index) {
@@ -39,8 +39,8 @@ class _MobileViewState extends State<MobileView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body:
-      // const LoginView(),
-        PageView(
+          // const LoginView(),
+          PageView(
         onPageChanged: _onPageChanged,
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
