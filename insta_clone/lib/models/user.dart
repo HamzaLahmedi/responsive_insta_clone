@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   String userName;
   String email;
@@ -22,9 +24,24 @@ class UserModel {
       'email': email,
       'password': password,
       'title': title,
-      'imgUrl':imgUrl,
+      'imgUrl': imgUrl,
       'following': following,
       'followers': followers,
     };
+  }
+  // function that convert "DocumentSnapshot" to a User
+// function that takes "DocumentSnapshot" and return a User
+
+  static convertSnap2Model(DocumentSnapshot snap) {
+    var snapshot = snap.data() as Map<String, dynamic>;
+    return UserModel(
+      email: snapshot["email"],
+      userName: snapshot["userName"],
+      password: snapshot["password"],
+      title: snapshot["title"],
+      imgUrl: snapshot["imgUrl"],
+      following: snapshot["following"],
+      followers: snapshot["followers"],
+    );
   }
 }

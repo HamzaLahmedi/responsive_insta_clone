@@ -2,13 +2,21 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:insta_clone/core/utils/custom_snackbar.dart';
 import 'package:insta_clone/core/utils/upload_image_for_web_and_mobile.dart';
+import 'package:insta_clone/firebase_services/fireStore.dart';
+import 'package:insta_clone/provider/user_provier.dart';
+import 'package:provider/provider.dart';
 
 class AddPostBody extends StatefulWidget {
   const AddPostBody({
-    super.key, required this.onImageChanged,
+    super.key,
+    required this.onImageChanged,
+    required this.isLoading,
   });
-final Function(bool) onImageChanged;
+  final Function(bool) onImageChanged;
+
+  final bool isLoading;
   @override
   State<AddPostBody> createState() => _AddPostBodyState();
 }
@@ -16,8 +24,10 @@ final Function(bool) onImageChanged;
 class _AddPostBodyState extends State<AddPostBody> {
   Uint8List? imgPath;
   String? imgName;
-  //final UploadImg uploadImg = UploadImg();
-
+  FirestoreMethods firestoreMethods = FirestoreMethods();
+  TextEditingController descriptionController = TextEditingController();
+  bool loading = false;
+  final formkey = GlobalKey<FormState>();
   void setImage(Uint8List? path, String? name) {
     setState(() {
       imgPath = path;
@@ -84,45 +94,93 @@ class _AddPostBodyState extends State<AddPostBody> {
 
   @override
   Widget build(BuildContext context) {
+    final allDataFromDB = Provider.of<UserProvider>(context).getUser;
+
     return imgPath != null
-        ? Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: MediaQuery.sizeOf(context).height / 3,
-                height: MediaQuery.sizeOf(context).height / 3,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: MemoryImage(imgPath!),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+        ? SingleChildScrollView(
+            child: Form(
+              key: formkey,
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        'https://i.pinimg.com/564x/94/df/a7/94dfa775f1bad7d81aa9898323f6f359.jpg'),
-                    radius: 26,
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.sizeOf(context).width / 1.5,
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Write a comment...',
+                  loading
+                      ? const Column(
+                          children: [
+                            LinearProgressIndicator(),
+                            SizedBox(
+                              height: 100,
+                            ),
+                          ],
+                        )
+                      : const SizedBox(),
+                  Container(
+                    width: MediaQuery.sizeOf(context).height / 3,
+                    height: MediaQuery.sizeOf(context).height / 3,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: MemoryImage(imgPath!),
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          allDataFromDB!.imgUrl,
+                        ),
+                        radius: 26,
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.sizeOf(context).width / 1.5,
+                        child: TextFormField(
+                          validator: (value) {
+                            return value!.isEmpty ? "Enter a comment" : null;
+                          },
+                          decoration: const InputDecoration(
+                            labelText: 'Write a comment...',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        setState(() {
+                          loading = true;
+                        });
+                        if (formkey.currentState!.validate()) {
+                          firestoreMethods.uploadPost(
+                            profileImg: allDataFromDB.imgUrl,
+                            description: descriptionController.text,
+                            username: allDataFromDB.userName,
+                            title: allDataFromDB.title,
+                            imgName: imgName!,
+                            imgPath: imgPath!,
+                            context: context,
+                          );
+                          setState(() {
+                            loading = false;
+                          });
+                        }
+                      },
+                      child: const Text(
+                        'Post',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )),
                 ],
               ),
-            ],
+            ),
           )
         : IconButton(
             onPressed: () {

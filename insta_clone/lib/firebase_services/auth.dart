@@ -26,7 +26,7 @@ class AuthMethods {
         email: emailAddress,
         password: password,
       );
-      String imgUrl = await getImgURL(imgName: imgName, imgPath: imgPath);
+      String imgUrl = await getImgURL(imgName: imgName, imgPath: imgPath,folderName: 'UsersProfileImg');
       UserModel userr = UserModel(
         userName: username,
         email: emailAddress,
@@ -69,5 +69,14 @@ class AuthMethods {
     } catch (e) {
       print(e);
     }
+  }
+
+// functoin to get user details from Firestore (Database)
+  Future<UserModel> getUserDetails() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    return UserModel.convertSnap2Model(snap);
   }
 }

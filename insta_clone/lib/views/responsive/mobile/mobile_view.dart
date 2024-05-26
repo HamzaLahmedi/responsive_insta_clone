@@ -16,7 +16,7 @@ class MobileView extends StatefulWidget {
 }
 
 class _MobileViewState extends State<MobileView> {
-  final PageController pageController = PageController(initialPage: 2);
+  final PageController pageController = PageController();
   int _selectedIndex = 0;
 
   void _onPageChanged(int index) {

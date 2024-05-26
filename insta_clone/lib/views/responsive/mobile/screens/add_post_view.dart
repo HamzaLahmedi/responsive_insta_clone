@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insta_clone/core/utils/colors.dart';
+import 'package:insta_clone/firebase_services/fireStore.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/add_post_body.dart';
 
 class AddPostView extends StatefulWidget {
@@ -11,13 +12,13 @@ class AddPostView extends StatefulWidget {
 
 class _AddPostViewState extends State<AddPostView> {
   String? appBarTitle;
-
+  bool isLoading = false;
   void updateAppBarTitle(bool hasImage) {
     setState(() {
       appBarTitle = 'Image Exists';
     });
   }
-
+FirestoreMethods firestoreMethods = FirestoreMethods();
   @override
   Widget build(BuildContext context) {
     return appBarTitle == null
@@ -30,6 +31,7 @@ class _AddPostViewState extends State<AddPostView> {
             body: Center(
               child: AddPostBody(
                 onImageChanged: updateAppBarTitle,
+                isLoading: isLoading,
               ),
             ),
           )
@@ -38,12 +40,21 @@ class _AddPostViewState extends State<AddPostView> {
             appBar: AppBar(
               backgroundColor: mobileBackgroundColor,
               leading: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    appBarTitle = null;
+                  });
+                },
                 icon: const Icon(Icons.arrow_back),
               ),
               actions: [
                 TextButton(
-                    onPressed: () {},
+                    onPressed: ()  {
+                      setState(() {
+                        isLoading = true;
+                      });
+                       
+                    },
                     child: const Text(
                       'Post',
                       style: TextStyle(
@@ -56,6 +67,7 @@ class _AddPostViewState extends State<AddPostView> {
             body: Center(
               child: AddPostBody(
                 onImageChanged: updateAppBarTitle,
+                isLoading: isLoading,
               ),
             ),
           );
