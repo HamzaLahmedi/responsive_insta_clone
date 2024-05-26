@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_clone/core/utils/colors.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/bottom_post_icons.dart';
@@ -11,87 +12,112 @@ class HomeBodyView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    return Container(
-      margin: EdgeInsets.symmetric(
-          vertical: screenWidth > 600 ? 55 : 0,
-          horizontal: screenWidth > 600 ? screenWidth / 6 : 0),
-      decoration: BoxDecoration(
-        color: mobileBackgroundColor,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        children: [
-          const HomeBodyHeader(),
-          Image.network(
-            "https://cdn1-m.alittihad.ae/store/archive/image/2021/10/22/6266a092-72dd-4a2f-82a4-d22ed9d2cc59.jpg?width=1300",
-            fit: BoxFit.cover,
-            height: MediaQuery.of(context).size.height * 0.35,
-            width: double.infinity,
-          ),
-          const BottomPostIcons(),
-          Container(
-            margin: const EdgeInsets.fromLTRB(10, 0, 0, 10),
-            width: double.infinity,
-            child: const Text(
-              "10 Likes",
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                fontSize: 18,
-                color: Color.fromARGB(214, 157, 157, 165),
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return const Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        return ListView(
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data =
+                document.data()! as Map<String, dynamic>;
+            return Container(
+              margin: EdgeInsets.symmetric(
+                  vertical: screenWidth > 600 ? 55 : 0,
+                  horizontal: screenWidth > 600 ? screenWidth / 6 : 0),
+              decoration: BoxDecoration(
+                color: mobileBackgroundColor,
+                borderRadius: BorderRadius.circular(12),
               ),
-            ),
-          ),
-          const Row(
-            children: [
-              SizedBox(
-                width: 9,
-              ),
-              Text(
-                "USERNAME ",
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Color.fromARGB(255, 189, 196, 199),
-                ),
-              ),
-              Text(
-                // " ${widget.snap["description"]}",
-                " Sidi Bou Said ♥",
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Color.fromARGB(255, 189, 196, 199),
-                ),
-              ),
-            ],
-          ),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-                margin: const EdgeInsets.fromLTRB(10, 13, 9, 10),
-                width: double.infinity,
-                child: const Text(
-                  "view all 100 comments",
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Color.fromARGB(214, 157, 157, 165),
+              child: Column(
+                children: [
+                  HomeBodyHeader(
+                    imgUrl: data['profileImg'] ?? '',
+                    userName: data['username'] ?? 'null',
                   ),
-                  textAlign: TextAlign.start,
-                )),
-          ),
-          Container(
-              margin: const EdgeInsets.fromLTRB(10, 0, 9, 10),
-              width: double.infinity,
-              child: const Text(
-                "10June 2022",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Color.fromARGB(214, 157, 157, 165),
-                ),
-                textAlign: TextAlign.start,
-              )),
-        ],
-      ),
+                  Image.network(
+                    data['imgPost'],
+                    fit: BoxFit.cover,
+                    height: MediaQuery.of(context).size.height * 0.35,
+                    width: double.infinity,
+                  ),
+                  const BottomPostIcons(),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(10, 0, 0, 10),
+                    width: double.infinity,
+                    child: Text(
+                      "${data['likes'].length.toString()} likes",
+                      textAlign: TextAlign.start,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Color.fromARGB(214, 157, 157, 165),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 9,
+                      ),
+                      Text(
+                        data['username'],
+                        textAlign: TextAlign.start,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Color.fromARGB(255, 189, 196, 199),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 9,
+                      ),
+                      Text(
+                        // " ${widget.snap["description"]}",
+                        data['description'],
+                        textAlign: TextAlign.start,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 189, 196, 199),
+                        ),
+                      ),
+                    ],
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                        margin: const EdgeInsets.fromLTRB(10, 13, 9, 10),
+                        width: double.infinity,
+                        child: const Text(
+                          "view all 100 comments",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Color.fromARGB(214, 157, 157, 165),
+                          ),
+                          textAlign: TextAlign.start,
+                        )),
+                  ),
+                  Container(
+                      margin: const EdgeInsets.fromLTRB(10, 0, 9, 10),
+                      width: double.infinity,
+                      child: const Text(
+                        '10 june 2024',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromARGB(214, 157, 157, 165),
+                        ),
+                        textAlign: TextAlign.start,
+                      )),
+                ],
+              ),
+            );
+          }).toList(),
+        );
+      },
     );
   }
 }

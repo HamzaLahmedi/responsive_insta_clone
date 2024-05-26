@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class HomeBodyHeader extends StatelessWidget {
   const HomeBodyHeader({
-    super.key,
+    super.key, required this.imgUrl, required this.userName,
   });
-
+final String imgUrl , userName;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -13,17 +13,17 @@ class HomeBodyHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Row(
+           Row(
             children: [
               CircleAvatar(
                 backgroundImage: NetworkImage(
-                    'https://i.pinimg.com/564x/94/df/a7/94dfa775f1bad7d81aa9898323f6f359.jpg'),
+                    imgUrl),
                 radius: 26,
               ),
-              SizedBox(width: 17),
+             const SizedBox(width: 17),
               Text(
-                'User Name',
-                style: TextStyle(
+                userName,
+                style:const TextStyle(
                   fontSize: 17,
                 ),
               ),

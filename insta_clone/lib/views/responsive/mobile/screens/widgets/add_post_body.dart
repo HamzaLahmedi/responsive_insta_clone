@@ -141,6 +141,7 @@ class _AddPostBodyState extends State<AddPostBody> {
                       SizedBox(
                         width: MediaQuery.sizeOf(context).width / 1.5,
                         child: TextFormField(
+                          controller: descriptionController,
                           validator: (value) {
                             return value!.isEmpty ? "Enter a comment" : null;
                           },
