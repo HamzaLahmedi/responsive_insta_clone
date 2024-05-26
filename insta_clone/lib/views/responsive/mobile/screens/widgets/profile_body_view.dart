@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:insta_clone/core/widgets/profile_posts.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/profile_header.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/profile_icons_section.dart';
 
@@ -19,6 +20,7 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
   int followers = 0;
   int following = 0;
   Map userData = {};
+  int nbrPosts = 0;
   getData() async {
     try {
       setState(() {
@@ -33,6 +35,11 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
       widget.onUserNameChanged(userData['userName']);
       followers = userData['followers'].length;
       following = userData['following'].length;
+      var snapshotPosts = await FirebaseFirestore.instance
+          .collection('posts')
+          .where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .get();
+      nbrPosts = snapshotPosts.docs.length;
     } catch (e) {
       print(e.toString());
     }
@@ -66,6 +73,7 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                   imgUrl: userData['imgUrl'],
                   nbrFollower: followers.toString(),
                   nbrFollowing: following.toString(),
+                  nbrPosts: nbrPosts.toString(),
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(35, 21, 0, 0),
@@ -93,25 +101,7 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                 const SizedBox(
                   height: 20,
                 ),
-                Expanded(
-                  child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 3 / 2,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10),
-                      itemCount: 4,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: Image.network(
-                            "https://cdn1-m.alittihad.ae/store/archive/image/2021/10/22/6266a092-72dd-4a2f-82a4-d22ed9d2cc59.jpg?width=1300",
-                            fit: BoxFit.cover,
-                          ),
-                        );
-                      }),
-                ),
+                const ProfilePosts(),
               ],
             ),
           );

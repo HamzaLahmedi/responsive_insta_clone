@@ -42,6 +42,7 @@ class FirestoreMethods {
           .set(post.toMap())
           .then((value) => showSnackBar(context, "Post Added"))
           .catchError((error) => print("Failed to add post: $error"));
+          
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, "Error: ${e.code}");
     } catch (e) {

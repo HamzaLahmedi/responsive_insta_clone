@@ -6,9 +6,9 @@ class ProfileHeader extends StatelessWidget {
     super.key,
     required this.imgUrl,
     required this.nbrFollower,
-    required this.nbrFollowing,
+    required this.nbrFollowing, required this.nbrPosts,
   });
-  final String imgUrl, nbrFollower, nbrFollowing;
+  final String imgUrl, nbrFollower, nbrFollowing , nbrPosts;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -27,8 +27,8 @@ class ProfileHeader extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const ProfileStats(
-                nbr: '1',
+               ProfileStats(
+                nbr: nbrPosts,
                 title: 'Posts',
               ),
               const SizedBox(

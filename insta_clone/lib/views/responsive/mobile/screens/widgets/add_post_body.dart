@@ -167,10 +167,10 @@ class _AddPostBodyState extends State<AddPostBody> {
                             imgPath: imgPath!,
                             context: context,
                           );
-                          setState(() {
-                            loading = false;
-                          });
                         }
+                        setState(() {
+                          loading = false;
+                        });
                       },
                       child: const Text(
                         'Post',
