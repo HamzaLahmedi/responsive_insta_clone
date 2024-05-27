@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_clone/core/utils/colors.dart';
 import 'package:insta_clone/core/widgets/custom_loading_widget.dart';
+import 'package:insta_clone/views/responsive/mobile/screens/profile_view.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
@@ -52,6 +53,16 @@ class _SearchViewState extends State<SearchView> {
                   itemCount: snapshot.data.docs.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfileView(
+                              uid: snapshot.data.docs[index]['uid'],
+                            ),
+                          ),
+                        );
+                      },
                       leading: CircleAvatar(
                         backgroundImage:
                             NetworkImage(snapshot.data.docs[index]['imgUrl']),

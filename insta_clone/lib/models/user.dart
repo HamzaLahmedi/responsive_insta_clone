@@ -8,6 +8,7 @@ class UserModel {
   String imgUrl;
   List following;
   List followers;
+  String uid;
   UserModel({
     required this.userName,
     required this.email,
@@ -16,6 +17,7 @@ class UserModel {
     required this.imgUrl,
     required this.following,
     required this.followers,
+    required this.uid,
   });
 
   Map<String, dynamic> toMapp() {
@@ -27,6 +29,7 @@ class UserModel {
       'imgUrl': imgUrl,
       'following': following,
       'followers': followers,
+      'uid': uid,
     };
   }
   // function that convert "DocumentSnapshot" to a User
@@ -42,6 +45,7 @@ class UserModel {
       imgUrl: snapshot["imgUrl"],
       following: snapshot["following"],
       followers: snapshot["followers"],
+      uid: snapshot["uid"],
     );
   }
 }

@@ -6,17 +6,19 @@ import 'package:insta_clone/core/utils/custom_snackbar.dart';
 import 'package:insta_clone/core/utils/upload_image_for_web_and_mobile.dart';
 import 'package:insta_clone/firebase_services/fireStore.dart';
 import 'package:insta_clone/provider/user_provier.dart';
+import 'package:insta_clone/views/responsive/layout_view.dart';
+import 'package:insta_clone/views/responsive/mobile/screens/home_view.dart';
 import 'package:provider/provider.dart';
 
 class AddPostBody extends StatefulWidget {
   const AddPostBody({
     super.key,
     required this.onImageChanged,
-    required this.isLoading,
+    //required this.isLoading,
   });
   final Function(bool) onImageChanged;
 
-  final bool isLoading;
+  // final bool isLoading;
   @override
   State<AddPostBody> createState() => _AddPostBodyState();
 }
@@ -26,7 +28,7 @@ class _AddPostBodyState extends State<AddPostBody> {
   String? imgName;
   FirestoreMethods firestoreMethods = FirestoreMethods();
   TextEditingController descriptionController = TextEditingController();
-  bool loading = false;
+
   final formkey = GlobalKey<FormState>();
   void setImage(Uint8List? path, String? name) {
     setState(() {
@@ -92,6 +94,7 @@ class _AddPostBodyState extends State<AddPostBody> {
         });
   }
 
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     final allDataFromDB = Provider.of<UserProvider>(context).getUser;
@@ -167,10 +170,15 @@ class _AddPostBodyState extends State<AddPostBody> {
                             imgPath: imgPath!,
                             context: context,
                           );
+                          setState(() {
+                            loading = false;
+                          });
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return const LayoutView();
+                            },
+                          ));
                         }
-                        setState(() {
-                          loading = false;
-                        });
                       },
                       child: const Text(
                         'Post',

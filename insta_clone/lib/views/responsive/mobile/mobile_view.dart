@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_clone/core/utils/colors.dart';
@@ -44,11 +45,13 @@ class _MobileViewState extends State<MobileView> {
         onPageChanged: _onPageChanged,
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
-        children: const [
-          HomeView(),
-          SearchView(),
-          AddPostView(),
-          ProfileView(),
+        children:  [
+         const HomeView(),
+         const SearchView(),
+         const AddPostView(),
+          ProfileView(
+            uid: FirebaseAuth.instance.currentUser!.uid,
+          ),
         ],
       ),
       bottomNavigationBar: CupertinoTabBar(

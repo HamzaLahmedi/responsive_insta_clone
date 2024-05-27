@@ -35,6 +35,7 @@ class AuthMethods {
         imgUrl: imgUrl,
         following: [],
         followers: [],
+        uid: credential.user!.uid,
       );
 
       CollectionReference users =

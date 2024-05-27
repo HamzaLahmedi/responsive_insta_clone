@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:insta_clone/core/widgets/profile_follow_button.dart';
 import 'package:insta_clone/core/widgets/profile_posts.dart';
+import 'package:insta_clone/core/widgets/profile_unfollow_button.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/profile_header.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/profile_icons_section.dart';
 
@@ -9,14 +11,18 @@ class ProfileBodyView extends StatefulWidget {
   const ProfileBodyView({
     super.key,
     required this.onUserNameChanged,
+    required this.uid,
   });
   final Function(String) onUserNameChanged;
+  final String uid;
+
   @override
   State<ProfileBodyView> createState() => _ProfileBodyViewState();
 }
 
 class _ProfileBodyViewState extends State<ProfileBodyView> {
   bool isLoading = true;
+  bool showFollowButton = true;
   int followers = 0;
   int following = 0;
   Map userData = {};
@@ -29,7 +35,7 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
       DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
           .instance
           .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .doc(widget.uid)
           .get();
       userData = snapshot.data()!;
       widget.onUserNameChanged(userData['userName']);
@@ -37,9 +43,11 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
       following = userData['following'].length;
       var snapshotPosts = await FirebaseFirestore.instance
           .collection('posts')
-          .where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .where("uid", isEqualTo: widget.uid)
           .get();
       nbrPosts = snapshotPosts.docs.length;
+      showFollowButton = userData['followers']
+          .contains(FirebaseAuth.instance.currentUser!.uid);
     } catch (e) {
       print(e.toString());
     }
@@ -51,6 +59,7 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
   @override
   void initState() {
     getData();
+
     super.initState();
   }
 
@@ -90,7 +99,52 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                 const SizedBox(
                   height: 9,
                 ),
-                const IconsSection(),
+                widget.uid == FirebaseAuth.instance.currentUser!.uid
+                    ? const IconsSection()
+                    : showFollowButton == false
+                        ? ProfileFollowButton(
+                            onPressed: () async {
+                              await FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(widget.uid)
+                                  .update({
+                                "followers": FieldValue.arrayUnion(
+                                    [FirebaseAuth.instance.currentUser!.uid])
+                              });
+                              await FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                                  .update({
+                                "following": FieldValue.arrayUnion([widget.uid])
+                              });
+                              followers++;
+                              setState(() {
+                                showFollowButton = true;
+                              });
+                            },
+                          )
+                        : ProfileUnfollowButton(
+                            onPressed: () async {
+                              await FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(widget.uid)
+                                  .update({
+                                "followers": FieldValue.arrayRemove(
+                                    [FirebaseAuth.instance.currentUser!.uid])
+                              });
+                              await FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                                  .update({
+                                "following":
+                                    FieldValue.arrayRemove([widget.uid])
+                              });
+                              followers--;
+                              setState(() {
+                                showFollowButton = false;
+                              });
+                            },
+                          ),
                 const SizedBox(
                   height: 9,
                 ),
@@ -101,7 +155,9 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
                 const SizedBox(
                   height: 20,
                 ),
-                const ProfilePosts(),
+                ProfilePosts(
+                  uid: widget.uid,
+                ),
               ],
             ),
           );

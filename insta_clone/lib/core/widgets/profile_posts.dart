@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:insta_clone/core/widgets/custom_loading_widget.dart';
 
 class ProfilePosts extends StatefulWidget {
-  const ProfilePosts({super.key});
-
+  const ProfilePosts({super.key, required this.uid});
+final String uid;
   @override
   State<ProfilePosts> createState() => _ProfilePostsState();
 }
@@ -16,7 +16,7 @@ class _ProfilePostsState extends State<ProfilePosts> {
     return FutureBuilder(
       future: FirebaseFirestore.instance
           .collection('posts')
-          .where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .where("uid", isEqualTo: widget.uid)
           .get(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {

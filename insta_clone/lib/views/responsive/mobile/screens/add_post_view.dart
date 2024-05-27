@@ -18,7 +18,8 @@ class _AddPostViewState extends State<AddPostView> {
       appBarTitle = 'Image Exists';
     });
   }
-FirestoreMethods firestoreMethods = FirestoreMethods();
+
+  FirestoreMethods firestoreMethods = FirestoreMethods();
   @override
   Widget build(BuildContext context) {
     return appBarTitle == null
@@ -31,7 +32,7 @@ FirestoreMethods firestoreMethods = FirestoreMethods();
             body: Center(
               child: AddPostBody(
                 onImageChanged: updateAppBarTitle,
-                isLoading: isLoading,
+                // isLoading: isLoading,
               ),
             ),
           )
@@ -47,7 +48,7 @@ FirestoreMethods firestoreMethods = FirestoreMethods();
                 },
                 icon: const Icon(Icons.arrow_back),
               ),
-              actions: [
+              /* actions: [
                 TextButton(
                     onPressed: ()  {
                       setState(() {
@@ -62,12 +63,12 @@ FirestoreMethods firestoreMethods = FirestoreMethods();
                         fontWeight: FontWeight.bold,
                       ),
                     )),
-              ],
+              ],*/
             ),
             body: Center(
               child: AddPostBody(
                 onImageChanged: updateAppBarTitle,
-                isLoading: isLoading,
+                // isLoading: isLoading,
               ),
             ),
           );

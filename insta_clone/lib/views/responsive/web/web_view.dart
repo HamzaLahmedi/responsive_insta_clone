@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:insta_clone/core/utils/colors.dart';
@@ -81,15 +82,17 @@ class _WebViewState extends State<WebView> {
         ),
       ),
       body:
-      // const RegisterView(),
-       PageView(
+          // const RegisterView(),
+          PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
-        children: const [
-          HomeView(),
-          SearchView(),
-          AddPostView(),
-          ProfileView(),
+        children: [
+          const HomeView(),
+          const SearchView(),
+          const AddPostView(),
+          ProfileView(
+            uid: FirebaseAuth.instance.currentUser!.uid,
+          ),
         ],
       ),
     );
