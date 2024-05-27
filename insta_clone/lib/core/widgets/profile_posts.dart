@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:insta_clone/core/widgets/custom_loading_widget.dart';
 
 class ProfilePosts extends StatefulWidget {
   const ProfilePosts({super.key});
@@ -43,7 +44,7 @@ class _ProfilePostsState extends State<ProfilePosts> {
           );
         }
 
-        return const Center(child: CircularProgressIndicator());
+        return const CustomLoadingWidget();
       },
     );
   }
