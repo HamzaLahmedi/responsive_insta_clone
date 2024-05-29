@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:insta_clone/core/widgets/custom_text_form_field.dart';
+import 'package:insta_clone/firebase_services/firestore.dart';
 import 'package:insta_clone/provider/user_provier.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -15,6 +16,7 @@ class CommentViewBody extends StatelessWidget {
   //post data
   final Map data;
   final TextEditingController commentController = TextEditingController();
+  final FirestoreMethods firestoreMethods = FirestoreMethods();
   @override
   Widget build(BuildContext context) {
     final userLoggedInfo = Provider.of<UserProvider>(context).getUser;
@@ -91,20 +93,16 @@ class CommentViewBody extends StatelessWidget {
                     controller: commentController,
                     suffixIcon: IconButton(
                       onPressed: () async {
-                        String commentId = const Uuid().v1();
-                        await FirebaseFirestore.instance
-                            .collection('posts')
-                            .doc(data['postId'])
-                            .collection('comments')
-                            .doc(commentId)
-                            .set({
-                          'profileImg': userLoggedInfo!.imgUrl,
-                          'userName': userLoggedInfo.userName,
-                          'comment': commentController.text,
-                          'date': DateTime.now(),
-                          'commentId': commentId,
-                          'userUid': userLoggedInfo.uid,
-                        });
+                        if (commentController.text.isNotEmpty) {
+                          firestoreMethods.uploadComment(
+                            postId: data['postId'],
+                            comment: commentController.text,
+                            profileImg: userLoggedInfo!.imgUrl,
+                            userName: userLoggedInfo.userName,
+                            commentController: commentController.text,
+                            uid: userLoggedInfo.uid,
+                          );
+                        }
                         commentController.clear();
                       },
                       icon: const Icon(

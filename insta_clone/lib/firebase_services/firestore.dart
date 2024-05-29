@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:insta_clone/core/utils/custom_snackbar.dart';
 import 'package:insta_clone/firebase_services/storage.dart';
 import 'package:insta_clone/models/post.dart';
@@ -42,11 +43,33 @@ class FirestoreMethods {
           .set(post.toMap())
           .then((value) => showSnackBar(context, "Post Added"))
           .catchError((error) => print("Failed to add post: $error"));
-          
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, "Error: ${e.code}");
     } catch (e) {
       print(e);
     }
+  }
+
+  uploadComment({
+    required String postId,
+    required String profileImg,
+    required String userName,
+    required String commentController,
+    required String uid, required String comment,
+  }) async {
+    String commentId = const Uuid().v1();
+    await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .doc(commentId)
+        .set({
+      'profileImg': profileImg,
+      'userName': userName,
+      'comment': commentController,
+      'date': DateTime.now(),
+      'commentId': commentId,
+      'userUid': uid,
+    });
   }
 }
