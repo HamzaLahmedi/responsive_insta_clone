@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_clone/core/utils/colors.dart';
+import 'package:insta_clone/core/widgets/custom_comment_item.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/comment_view.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/bottom_post_icons.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/home_body_header.dart';
@@ -109,7 +110,10 @@ class _CustomPostItemState extends State<CustomPostItem> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return CommentView(data: widget.data);
+                    return CommentView(
+                      data: widget.data,
+                      showBottomSection: false,
+                    );
                   },
                 ),
               );

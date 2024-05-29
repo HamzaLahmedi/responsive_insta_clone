@@ -3,10 +3,11 @@ import 'package:insta_clone/views/responsive/mobile/screens/comment_view.dart';
 
 class BottomPostIcons extends StatelessWidget {
   const BottomPostIcons({
-    super.key, required this.data,
+    super.key,
+    required this.data,
   });
 //post data
-final Map data;
+  final Map data;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,8 +27,9 @@ final Map data;
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return  CommentView(
-                          data :data
+                        return CommentView(
+                          data: data,
+                          showBottomSection: true,
                         );
                       },
                     ),

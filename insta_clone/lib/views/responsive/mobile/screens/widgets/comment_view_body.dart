@@ -15,9 +15,11 @@ class CommentViewBody extends StatelessWidget {
   CommentViewBody({
     super.key,
     required this.data,
+    required this.showBottomSection,
   });
   //post data
   final Map data;
+  final bool showBottomSection;
   final TextEditingController commentController = TextEditingController();
   final FirestoreMethods firestoreMethods = FirestoreMethods();
   @override
@@ -54,51 +56,53 @@ class CommentViewBody extends StatelessWidget {
             );
           },
         ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: Row(
-            children: [
-              CircleAvatar(
-                backgroundColor: const Color.fromARGB(255, 225, 225, 225),
-                radius: 25,
-                backgroundImage: NetworkImage(
-                  userLoggedInfo!.imgUrl,
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: CustomTextFormField(
-                    text: 'Enter Your Comment : ',
-                    keyboardType: TextInputType.text,
-                    controller: commentController,
-                    suffixIcon: IconButton(
-                      onPressed: () async {
-                        if (commentController.text.isNotEmpty) {
-                          firestoreMethods.uploadComment(
-                            postId: data['postId'],
-                            comment: commentController.text,
-                            profileImg: userLoggedInfo.imgUrl,
-                            userName: userLoggedInfo.userName,
-                            commentController: commentController.text,
-                            uid: userLoggedInfo.uid,
-                          );
-                        }
-                        commentController.clear();
-                      },
-                      icon: const Icon(
-                        Icons.send,
+        showBottomSection
+            ? Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: const Color.fromARGB(255, 225, 225, 225),
+                      radius: 25,
+                      backgroundImage: NetworkImage(
+                        userLoggedInfo!.imgUrl,
                       ),
                     ),
-                  ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: CustomTextFormField(
+                          text: 'Enter Your Comment : ',
+                          keyboardType: TextInputType.text,
+                          controller: commentController,
+                          suffixIcon: IconButton(
+                            onPressed: () async {
+                              if (commentController.text.isNotEmpty) {
+                                firestoreMethods.uploadComment(
+                                  postId: data['postId'],
+                                  comment: commentController.text,
+                                  profileImg: userLoggedInfo.imgUrl,
+                                  userName: userLoggedInfo.userName,
+                                  commentController: commentController.text,
+                                  uid: userLoggedInfo.uid,
+                                );
+                              }
+                              commentController.clear();
+                            },
+                            icon: const Icon(
+                              Icons.send,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-              ),
-            ],
-          ),
-        )
+              )
+            : const SizedBox()
       ],
     );
   }
