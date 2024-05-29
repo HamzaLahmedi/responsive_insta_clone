@@ -35,7 +35,9 @@ class _CustomPostItemState extends State<CustomPostItem> {
                     height: MediaQuery.of(context).size.height * 0.35,
                     width: double.infinity,
                   ),
-                  const BottomPostIcons(),
+                   BottomPostIcons(
+                    data: widget.data,
+                  ),
                   Container(
                     margin: const EdgeInsets.fromLTRB(10, 0, 0, 10),
                     width: double.infinity,

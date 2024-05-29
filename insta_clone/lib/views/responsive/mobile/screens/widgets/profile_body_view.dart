@@ -23,10 +23,10 @@ class ProfileBodyView extends StatefulWidget {
 class _ProfileBodyViewState extends State<ProfileBodyView> {
   bool isLoading = true;
   bool showFollowButton = true;
-  int followers = 0;
-  int following = 0;
+  late int followers;
+  late int following;
   Map userData = {};
-  int nbrPosts = 0;
+  late int nbrPosts;
   getData() async {
     try {
       setState(() {
