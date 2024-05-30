@@ -1,11 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:insta_clone/firebase_services/firestore.dart';
 
 class HomeBodyHeader extends StatelessWidget {
-  const HomeBodyHeader({
-    super.key, required this.imgUrl, required this.userName,
+  HomeBodyHeader({
+    super.key,
+    required this.imgUrl,
+    required this.userName,
+    required this.data,
   });
-final String imgUrl , userName;
+  final String imgUrl, userName;
+// post data
+  final Map data;
+
+  final FirestoreMethods firestoreMethods = FirestoreMethods();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -13,24 +21,29 @@ final String imgUrl , userName;
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-           Row(
+          Row(
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage(
-                    imgUrl),
+                backgroundImage: NetworkImage(imgUrl),
                 radius: 26,
               ),
-             const SizedBox(width: 17),
+              const SizedBox(width: 17),
               Text(
                 userName,
-                style:const TextStyle(
+                style: const TextStyle(
                   fontSize: 17,
                 ),
               ),
             ],
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              firestoreMethods.showmodel(
+                context: context,
+                uid: data['uid'],
+                postId: data['postId'],
+              );
+            },
             icon: const Icon(
               Icons.more_vert,
             ),

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_clone/core/utils/colors.dart';
 import 'package:insta_clone/core/widgets/custom_comment_item.dart';
@@ -53,6 +54,7 @@ class _CustomPostItemState extends State<CustomPostItem> {
           HomeBodyHeader(
             imgUrl: widget.data['profileImg'] ?? '',
             userName: widget.data['username'] ?? 'null',
+            data: widget.data,
           ),
           Image.network(
             widget.data['imgPost'],

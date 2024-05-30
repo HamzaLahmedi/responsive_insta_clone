@@ -55,7 +55,8 @@ class FirestoreMethods {
     required String profileImg,
     required String userName,
     required String commentController,
-    required String uid, required String comment,
+    required String uid,
+    required String comment,
   }) async {
     String commentId = const Uuid().v1();
     await FirebaseFirestore.instance
@@ -71,5 +72,56 @@ class FirestoreMethods {
       'commentId': commentId,
       'userUid': uid,
     });
+  }
+
+  //displayed in home view to delet post used in home_body_header widget
+  showmodel({required context, required String uid, required String postId}) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          children: [
+            FirebaseAuth.instance.currentUser!.uid == uid
+                ? SimpleDialogOption(
+                    onPressed: () async {
+                      Navigator.of(context).pop();
+                      await FirebaseFirestore.instance
+                          .collection("posts")
+                          .doc(postId)
+                          .delete();
+                    },
+                    padding: const EdgeInsets.all(20),
+                    child: const Text(
+                      "Delete post",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  )
+                : const SimpleDialogOption(
+                    padding: EdgeInsets.all(20),
+                    child: Text(
+                      "Can not delete this post ✋",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+            SimpleDialogOption(
+              onPressed: () async {
+                Navigator.of(context).pop();
+              },
+              padding: const EdgeInsets.all(20),
+              child: const Text(
+                "Cancel",
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
