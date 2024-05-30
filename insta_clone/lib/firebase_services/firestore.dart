@@ -124,4 +124,22 @@ class FirestoreMethods {
       },
     );
   }
+
+  likeMethod({required String postId, required List likes}) async {
+    if (likes.contains(FirebaseAuth.instance.currentUser!.uid)) {
+      await FirebaseFirestore.instance.collection('posts').doc(postId).update(
+        {
+          "likes":
+              FieldValue.arrayRemove([FirebaseAuth.instance.currentUser!.uid]),
+        },
+      );
+    } else {
+      await FirebaseFirestore.instance.collection('posts').doc(postId).update(
+        {
+          "likes":
+              FieldValue.arrayUnion([FirebaseAuth.instance.currentUser!.uid]),
+        },
+      );
+    }
+  }
 }
