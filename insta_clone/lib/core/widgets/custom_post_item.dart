@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_clone/core/utils/colors.dart';
 import 'package:insta_clone/core/widgets/custom_comment_item.dart';
+import 'package:insta_clone/core/widgets/custom_loading_widget.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/comment_view.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/bottom_post_icons.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/home_body_header.dart';
@@ -58,6 +59,13 @@ class _CustomPostItemState extends State<CustomPostItem> {
           ),
           Image.network(
             widget.data['imgPost'],
+            loadingBuilder: (context, child, progress) {
+              return progress == null
+                  ? child
+                  : SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.35,
+                      child: const CustomLoadingWidget());
+            },
             fit: BoxFit.cover,
             height: MediaQuery.of(context).size.height * 0.35,
             width: double.infinity,

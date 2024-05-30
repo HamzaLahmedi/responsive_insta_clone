@@ -5,7 +5,7 @@ import 'package:insta_clone/core/widgets/custom_loading_widget.dart';
 
 class ProfilePosts extends StatefulWidget {
   const ProfilePosts({super.key, required this.uid});
-final String uid;
+  final String uid;
   @override
   State<ProfilePosts> createState() => _ProfilePostsState();
 }
@@ -37,6 +37,11 @@ class _ProfilePostsState extends State<ProfilePosts> {
                     borderRadius: BorderRadius.circular(4),
                     child: Image.network(
                       snapshot.data.docs[index]['imgPost'],
+                      loadingBuilder: (context, child, progress) {
+                        return progress == null
+                            ? child
+                            : const CustomLoadingWidget();
+                      },
                       fit: BoxFit.cover,
                     ),
                   );
