@@ -8,7 +8,6 @@ import 'package:insta_clone/firebase_options_security.dart';
 import 'package:insta_clone/provider/user_provier.dart';
 import 'package:insta_clone/views/responsive/layout_view.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/login_view.dart';
-import 'package:insta_clone/views/responsive/mobile/screens/register_view.dart';
 import 'package:provider/provider.dart';
 
 void main() async {

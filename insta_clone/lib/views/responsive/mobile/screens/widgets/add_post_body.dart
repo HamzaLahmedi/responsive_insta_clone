@@ -2,12 +2,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:insta_clone/core/utils/custom_snackbar.dart';
 import 'package:insta_clone/core/utils/upload_image_for_web_and_mobile.dart';
-import 'package:insta_clone/firebase_services/fireStore.dart';
+import 'package:insta_clone/firebase_services/fire_store.dart';
 import 'package:insta_clone/provider/user_provier.dart';
 import 'package:insta_clone/views/responsive/layout_view.dart';
-import 'package:insta_clone/views/responsive/mobile/screens/home_view.dart';
 import 'package:provider/provider.dart';
 
 class AddPostBody extends StatefulWidget {

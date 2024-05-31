@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:insta_clone/firebase_services/firestore.dart';
+import 'package:insta_clone/firebase_services/fire_store.dart';
 
 class HomeBodyHeader extends StatelessWidget {
   HomeBodyHeader({

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insta_clone/core/utils/colors.dart';
-import 'package:insta_clone/firebase_services/fireStore.dart';
+import 'package:insta_clone/firebase_services/fire_store.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/add_post_body.dart';
 
 class AddPostView extends StatefulWidget {

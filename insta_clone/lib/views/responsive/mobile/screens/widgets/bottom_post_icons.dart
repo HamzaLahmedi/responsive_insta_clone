@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:insta_clone/firebase_services/firestore.dart';
+import 'package:insta_clone/firebase_services/fire_store.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/comment_view.dart';
 
 class BottomPostIcons extends StatelessWidget {

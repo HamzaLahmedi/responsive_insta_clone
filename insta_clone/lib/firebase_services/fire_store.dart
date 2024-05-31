@@ -42,11 +42,17 @@ class FirestoreMethods {
           .doc(uid)
           .set(post.toMap())
           .then((value) => showSnackBar(context, "Post Added"))
-          .catchError((error) => print("Failed to add post: $error"));
+          .catchError((error) => showSnackBar(
+                context,
+                'Failed to add post: $error',
+              ));
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, "Error: ${e.code}");
     } catch (e) {
-      print(e);
+      showSnackBar(
+        context,
+        e.toString(),
+      );
     }
   }
 
@@ -141,5 +147,14 @@ class FirestoreMethods {
         },
       );
     }
+  }
+
+  likeWithDoubleTap(postId) async {
+    await FirebaseFirestore.instance.collection('posts').doc(postId).update(
+      {
+        "likes":
+            FieldValue.arrayUnion([FirebaseAuth.instance.currentUser!.uid]),
+      },
+    );
   }
 }

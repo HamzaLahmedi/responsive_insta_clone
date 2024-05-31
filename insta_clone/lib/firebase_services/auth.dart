@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,7 +6,6 @@ import 'package:insta_clone/core/utils/custom_snackbar.dart';
 import 'package:insta_clone/firebase_services/storage.dart';
 import 'package:insta_clone/models/user.dart';
 import 'package:insta_clone/views/responsive/layout_view.dart';
-import 'package:insta_clone/views/responsive/mobile/screens/login_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthMethods {
@@ -26,7 +24,8 @@ class AuthMethods {
         email: emailAddress,
         password: password,
       );
-      String imgUrl = await getImgURL(imgName: imgName, imgPath: imgPath,folderName: 'UsersProfileImg');
+      String imgUrl = await getImgURL(
+          imgName: imgName, imgPath: imgPath, folderName: 'UsersProfileImg');
       UserModel userr = UserModel(
         userName: username,
         email: emailAddress,
@@ -43,8 +42,12 @@ class AuthMethods {
       users
           .doc(credential.user!.uid)
           .set(userr.toMapp())
-          .then((value) => print("User Added"))
-          .catchError((error) => print("Failed to add user: $error"));
+          .then(
+            (value) => showSnackBar(context, "User Added"),
+          )
+          .catchError(
+            (error) => showSnackBar(context, 'Failed to add user: $error'),
+          );
 
       Navigator.pushReplacement(
         context,
@@ -53,13 +56,16 @@ class AuthMethods {
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, "Error: ${e.code}");
     } catch (e) {
-      print(e);
+      showSnackBar(
+        context,
+        e.toString(),
+      );
     }
   }
 
   signIn({required String email, required String password, context}) async {
     try {
-      final credential = await FirebaseAuth.instance
+      await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       Navigator.pushReplacement(
         context,
@@ -68,7 +74,10 @@ class AuthMethods {
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, "Error: ${e.code}");
     } catch (e) {
-      print(e);
+      showSnackBar(
+        context,
+        e.toString(),
+      );
     }
   }
 

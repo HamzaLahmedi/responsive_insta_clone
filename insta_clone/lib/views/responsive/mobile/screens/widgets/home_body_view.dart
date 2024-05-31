@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:insta_clone/core/utils/colors.dart';
 import 'package:insta_clone/core/widgets/custom_post_item.dart';
-import 'package:insta_clone/views/responsive/mobile/screens/widgets/bottom_post_icons.dart';
-import 'package:insta_clone/views/responsive/mobile/screens/widgets/home_body_header.dart';
-import 'package:intl/intl.dart';
+
 
 class HomeBodyView extends StatelessWidget {
   const HomeBodyView({
@@ -13,7 +10,7 @@ class HomeBodyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
+   
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('posts').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

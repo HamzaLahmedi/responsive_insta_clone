@@ -1,9 +1,10 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_clone/core/utils/colors.dart';
-import 'package:insta_clone/core/widgets/custom_comment_item.dart';
 import 'package:insta_clone/core/widgets/custom_loading_widget.dart';
+import 'package:insta_clone/firebase_services/fire_store.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/comment_view.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/bottom_post_icons.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/home_body_header.dart';
@@ -18,6 +19,8 @@ class CustomPostItem extends StatefulWidget {
 
 class _CustomPostItemState extends State<CustomPostItem> {
   int commentLength = 0;
+  bool showHeart = false;
+  FirestoreMethods firestoreMethods = FirestoreMethods();
   Future<int> getCommentsLength() async {
     QuerySnapshot commentsSnapshot = await FirebaseFirestore.instance
         .collection('posts')
@@ -57,18 +60,43 @@ class _CustomPostItemState extends State<CustomPostItem> {
             userName: widget.data['username'] ?? 'null',
             data: widget.data,
           ),
-          Image.network(
-            widget.data['imgPost'],
-            loadingBuilder: (context, child, progress) {
-              return progress == null
-                  ? child
-                  : SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.35,
-                      child: const CustomLoadingWidget());
-            },
-            fit: BoxFit.cover,
-            height: MediaQuery.of(context).size.height * 0.35,
-            width: double.infinity,
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              GestureDetector(
+                onDoubleTap: () async {
+                  setState(() {
+                    showHeart = true;
+                  });
+                  Timer(const Duration(milliseconds: 400), () {
+                    setState(() {
+                      showHeart = false;
+                    });
+                  });
+                  firestoreMethods.likeWithDoubleTap(widget.data['postId']);
+                },
+                child: Image.network(
+                  widget.data['imgPost'],
+                  loadingBuilder: (context, child, progress) {
+                    return progress == null
+                        ? child
+                        : SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.35,
+                            child: const CustomLoadingWidget());
+                  },
+                  fit: BoxFit.cover,
+                  height: MediaQuery.of(context).size.height * 0.35,
+                  width: double.infinity,
+                ),
+              ),
+              showHeart
+                  ? const Icon(
+                      Icons.favorite,
+                      color: Colors.white,
+                      size: 150,
+                    )
+                  : const SizedBox(),
+            ],
           ),
           BottomPostIcons(
             data: widget.data,

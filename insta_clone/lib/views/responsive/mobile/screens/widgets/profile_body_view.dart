@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:insta_clone/core/utils/custom_snackbar.dart';
 import 'package:insta_clone/core/widgets/profile_follow_button.dart';
 import 'package:insta_clone/core/widgets/profile_posts.dart';
 import 'package:insta_clone/core/widgets/profile_unfollow_button.dart';
@@ -49,7 +50,11 @@ class _ProfileBodyViewState extends State<ProfileBodyView> {
       showFollowButton = userData['followers']
           .contains(FirebaseAuth.instance.currentUser!.uid);
     } catch (e) {
-      print(e.toString());
+      if (!mounted) return;
+      showSnackBar(
+        context,
+        e.toString(),
+      );
     }
     setState(() {
       isLoading = false;

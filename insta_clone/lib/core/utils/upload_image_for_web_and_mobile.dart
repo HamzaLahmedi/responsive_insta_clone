@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:insta_clone/core/utils/custom_snackbar.dart';
 import 'package:path/path.dart' show basename;
 
 Future<void> uploadImage2Screen(BuildContext context, Function(Uint8List?, String?) setImage,  {required ImageSource source})  async {
@@ -14,13 +15,15 @@ Future<void> uploadImage2Screen(BuildContext context, Function(Uint8List?, Strin
       String imgName = basename(pickedImg.path);
       int random = Random().nextInt(9999999);
       imgName = "$random$imgName";
-      print(imgName);
+      
 
       setImage(imgPath, imgName);
     } else {
-      print("NO img selected");
+      if (!context.mounted) return;
+      showSnackBar( context, 'NO img selected',);
     }
   } catch (e) {
-    print("Error => $e");
+     if (!context.mounted) return;
+  showSnackBar( context, "Error => $e",);
   }
 }
