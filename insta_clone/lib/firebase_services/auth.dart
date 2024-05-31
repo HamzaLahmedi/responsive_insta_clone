@@ -74,10 +74,8 @@ class AuthMethods {
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, "Error: ${e.code}");
     } catch (e) {
-      showSnackBar(
-        context,
-        e.toString(),
-      );
+      //showSnackBar(context, "Error: ${e.toString()}");
+      print(e);
     }
   }
 

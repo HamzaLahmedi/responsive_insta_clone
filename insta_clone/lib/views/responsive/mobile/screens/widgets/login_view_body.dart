@@ -88,9 +88,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       email: emailController.text,
                       password: passwordController.text,
                     );
-                    setState(() {
-                        isLoading=false;
-                      });
+                    
                     }else {
                       showSnackBar(context, "All fields required");
                     }
