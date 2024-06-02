@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:insta_clone/core/utils/colors.dart';
-import 'package:insta_clone/views/responsive/mobile/screens/listofusersfolloweachother.dart';
+import 'package:insta_clone/views/responsive/mobile/screens/list_of_users_chated_with.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/home_body_view.dart';
 
 class HomeView extends StatelessWidget {
@@ -28,13 +28,12 @@ class HomeView extends StatelessWidget {
               actions: [
                 IconButton(
                   onPressed: () {
-                    /*Navigator.push(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            const ListOfUsersFollowEachOther(),
+                        builder: (context) => const ListOfUsersChatedWith(),
                       ),
-                    );*/
+                    );
                   },
                   icon: const Icon(Icons.messenger_outline),
                 ),

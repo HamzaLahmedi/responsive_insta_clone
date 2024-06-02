@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:insta_clone/core/utils/custom_snackbar.dart';
 import 'package:insta_clone/core/widgets/profile_follow_button.dart';
 import 'package:insta_clone/core/widgets/profile_message_button.dart';

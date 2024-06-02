@@ -11,6 +11,7 @@ class ChatServices extends ChangeNotifier {
     required String message,
     required String receiverId,
     required String receiverImg,
+    required String senderName,
   }) async {
     final currentUserId = _auth.currentUser!.uid;
     final senderData =
@@ -24,6 +25,7 @@ class ChatServices extends ChangeNotifier {
       receiverImg: receiverImg,
       dateTime: timeSend,
       message: message,
+      receiverName: senderName,
     );
     List<String> ids = [currentUserId, receiverId];
     ids.sort();
@@ -39,8 +41,10 @@ class ChatServices extends ChangeNotifier {
   }
 
   // get message
-  Stream<QuerySnapshot> getMessages(
-      {required String senderId, required String receiverId}) {
+  Stream<QuerySnapshot> getMessages({
+    required String senderId,
+    required String receiverId,
+  }) {
     List<String> ids = [senderId, receiverId];
     ids.sort();
     String chatRoomId = ids.join('-');

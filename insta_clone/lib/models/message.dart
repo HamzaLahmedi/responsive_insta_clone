@@ -7,6 +7,7 @@ class MessageModel {
   final String receiverImg;
   final DateTime dateTime;
   final String message;
+  final String receiverName;
 
   MessageModel({
     required this.senderId,
@@ -15,6 +16,7 @@ class MessageModel {
     required this.receiverImg,
     required this.dateTime,
     required this.message,
+    required this.receiverName,
   });
   Map<String, dynamic> toMap() {
     return {
@@ -24,6 +26,7 @@ class MessageModel {
       "receiverImg": receiverImg,
       "dateTime": dateTime,
       "message": message,
+      "receiverName": receiverName,
     };
   }
 
@@ -36,6 +39,7 @@ class MessageModel {
       message: snapshot["message"],
       senderImg: snapshot["senderImg"],
       receiverImg: snapshot["receiverImg"],
+      receiverName: snapshot["receiverName"],
     );
   }
 }

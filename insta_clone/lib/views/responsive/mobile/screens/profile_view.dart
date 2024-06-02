@@ -3,7 +3,7 @@ import 'package:insta_clone/core/utils/colors.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/profile_body_view.dart';
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({super.key, required this.uid});
+  const ProfileView({super.key, required this.uid,});
 final String uid;
   @override
   State<ProfileView> createState() => _ProfileViewState();

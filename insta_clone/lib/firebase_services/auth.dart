@@ -72,6 +72,7 @@ class AuthMethods {
         MaterialPageRoute(builder: (context) => const LayoutView()),
       );
     } on FirebaseAuthException catch (e) {
+      print(e);
       showSnackBar(context, "Error: ${e.code}");
     } catch (e) {
       //showSnackBar(context, "Error: ${e.toString()}");
