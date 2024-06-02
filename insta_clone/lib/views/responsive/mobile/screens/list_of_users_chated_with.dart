@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:insta_clone/core/utils/colors.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/list_of_users_chated_with_body.dart';
 
