@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 
-class ProfileUnfollowButton extends StatelessWidget {
-  const ProfileUnfollowButton({super.key, this.onPressed});
+class ProfileMessageButton extends StatelessWidget {
+  const ProfileMessageButton({super.key, this.onPressed});
   final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+
     return ElevatedButton(
       onPressed: onPressed,
       style: ButtonStyle(
-        backgroundColor:
-            MaterialStateProperty.all(const Color.fromARGB(143, 255, 55, 112)),
+        backgroundColor: MaterialStateProperty.all(
+          const Color(0xFF673AB7),
+        ),
         padding: MaterialStateProperty.all(
-            EdgeInsets.symmetric(vertical: 9, horizontal: screenWidth * .08)),
+          EdgeInsets.symmetric(
+            vertical: 9,
+            horizontal: screenWidth * .08,
+          ),
+        ),
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(7),
@@ -21,8 +27,11 @@ class ProfileUnfollowButton extends StatelessWidget {
         ),
       ),
       child: const Text(
-        "unfollow",
-        style: TextStyle(fontSize: 17),
+        "Message",
+        style: TextStyle(
+          fontSize: 17,
+          color: Colors.white,
+        ),
       ),
     );
   }

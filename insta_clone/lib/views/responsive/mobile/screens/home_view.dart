@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:insta_clone/core/utils/colors.dart';
+import 'package:insta_clone/views/responsive/mobile/screens/listofusersfolloweachother.dart';
 import 'package:insta_clone/views/responsive/mobile/screens/widgets/home_body_view.dart';
 
 class HomeView extends StatelessWidget {
@@ -10,6 +11,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor:
           screenWidth > 600 ? webBackgroundColor : mobileBackgroundColor,
@@ -25,11 +27,19 @@ class HomeView extends StatelessWidget {
               ),
               actions: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    /*Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const ListOfUsersFollowEachOther(),
+                      ),
+                    );*/
+                  },
                   icon: const Icon(Icons.messenger_outline),
                 ),
                 IconButton(
-                  onPressed: ()async {
+                  onPressed: () async {
                     await FirebaseAuth.instance.signOut();
                   },
                   icon: const Icon(Icons.logout),
